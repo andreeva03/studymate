@@ -1,0 +1,46 @@
+<div class="p-6 flex flex-col items-center">
+  <div class="max-w-xl w-full">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Elixir/Phoenix Study Hub</h1>
+    <p class="text-gray-500 mb-8">Current Deck: Functional Programming Terms</p>
+
+    <div id="cardContainer" class="card-container mx-auto">
+      <div id="flashcard"
+           phx-click="flip"
+           class={"flashcard " <> if @is_flipped, do: "flipped", else: ""}>
+        <div id="cardFront" class="card-face front">
+          <p class="text-2xl font-semibold text-indigo-700">
+            <%= (Enum.at(@flashcards, @current_index) || %{})[:front] || "No cards" %>
+          </p>
+        </div>
+        <div id="cardBack" class="card-face back">
+          <p class="text-lg text-gray-700">
+            <%= (Enum.at(@flashcards, @current_index) || %{})[:back] || "" %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p id="cardIndex" class="text-sm text-center text-gray-500 mt-4 mb-8">
+      <%= if @completed do %>
+        All <%= length(@flashcards) %> cards reviewed.
+      <% else %>
+        Card <%= @current_index + 1 %> of <%= length(@flashcards) %>
+      <% end %>
+    </p>
+
+    <div class="button-group flex justify-center space-x-4">
+      <button phx-click="prev"
+        class="px-6 py-3 bg-gray-300 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"
+        disabled={@current_index == 0}>
+  Prev
+  </button>
+
+
+      <button phx-click="next"
+              class={"px-8 py-3 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 " <>
+                     if @completed, do: "bg-gray-400 text-white cursor-not-allowed", else: "bg-green-500 text-white hover:bg-green-600"}>
+        Next Card
+      </button>
+    </div>
+  </div>
+</div>
