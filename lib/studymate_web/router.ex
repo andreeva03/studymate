@@ -17,11 +17,13 @@ defmodule StudymateWeb.Router do
   scope "/", StudymateWeb do
     pipe_through :browser
 
-    # LiveView root route
-    live "/", FlashcardLive, :index
+    get "/", PageController, :home
+    
+    # Flashcard Routes
+    live "/flashcards", FlashcardLive.Index, :index
   end
 
-  # Enable LiveDashboard and Swoosh mailbox preview in development
+  # Other scopes may include telemetry or mailbox routes if you are in dev mode
   if Application.compile_env(:studymate, :dev_routes) do
     import Phoenix.LiveDashboard.Router
 

@@ -1,32 +1,51 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        v<%= Application.spec(:phoenix, :vsn) %>
-      </p>
-    </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <a href="https://twitter.com/elixirphoenix" class="hover:text-zinc-700">
-        @elixirphoenix
-      </a>
-      <a href="https://github.com/phoenixframework/phoenix" class="hover:text-zinc-700">
-        GitHub
-      </a>
-      <a
-        href="https://hexdocs.pm/phoenix/overview.html"
-        class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80"
-      >
-        Get Started <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
+<main class="relative">
+  <!-- Flash Message Container - Centered and more prominent -->
+  <div class="fixed top-6 right-6 z-50 w-full max-w-sm space-y-3 pointer-events-none">
+    <%= if @flash["info"] do %>
+      <div role="alert"
+           phx-click="lv:clear-flash"
+           phx-value-key="info"
+           class="pointer-events-auto flex items-start gap-4 p-4 text-sm bg-white/95 backdrop-blur-sm border-l-4 border-emerald-500 rounded-lg shadow-xl cursor-pointer animate-in slide-in-from-top-4 fade-in duration-300 hover:bg-white transition-colors group ring-1 ring-black/5">
+        <div class="p-1 bg-emerald-50 rounded-full text-emerald-600 group-hover:bg-emerald-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="flex-1 pt-0.5">
+          <p class="font-bold text-slate-800">Success</p>
+          <p class="text-slate-600 font-medium leading-snug mt-0.5"><%= @flash["info"] %></p>
+        </div>
+        <button class="text-slate-400 hover:text-slate-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    <% end %>
+
+    <%= if @flash["error"] do %>
+      <div role="alert"
+           phx-click="lv:clear-flash"
+           phx-value-key="error"
+           class="pointer-events-auto flex items-start gap-4 p-4 text-sm bg-white/95 backdrop-blur-sm border-l-4 border-red-500 rounded-lg shadow-xl cursor-pointer animate-in slide-in-from-top-4 fade-in duration-300 hover:bg-white transition-colors group ring-1 ring-black/5">
+        <div class="p-1 bg-red-50 rounded-full text-red-500 group-hover:bg-red-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="flex-1 pt-0.5">
+          <p class="font-bold text-slate-800">Attention</p>
+          <p class="text-slate-600 font-medium leading-snug mt-0.5"><%= @flash["error"] %></p>
+        </div>
+        <button class="text-slate-400 hover:text-slate-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    <% end %>
   </div>
-</header>
-<main class="px-4 py-20 sm:px-6 lg:px-8">
-  <div class="mx-auto max-w-2xl">
-    <.flash_group flash={@flash} />
-    <%= @inner_content %>
-  </div>
+
+  <!-- Main Content -->
+  <%= @inner_content %>
 </main>
