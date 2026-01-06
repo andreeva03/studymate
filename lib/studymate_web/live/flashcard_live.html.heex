@@ -1,46 +1,67 @@
-<div class="p-6 flex flex-col items-center">
-  <div class="max-w-xl w-full">
-    <h1 class="text-3xl font-bold text-gray-800 mb-2">Elixir/Phoenix Study Hub</h1>
-    <p class="text-gray-500 mb-8">Current Deck: Functional Programming Terms</p>
-
-    <div id="cardContainer" class="card-container mx-auto">
-      <div id="flashcard"
-           phx-click="flip"
-           class={"flashcard " <> if @is_flipped, do: "flipped", else: ""}>
-        <div id="cardFront" class="card-face front">
-          <p class="text-2xl font-semibold text-indigo-700">
-            <%= (Enum.at(@flashcards, @current_index) || %{})[:front] || "No cards" %>
-          </p>
-        </div>
-        <div id="cardBack" class="card-face back">
-          <p class="text-lg text-gray-700">
-            <%= (Enum.at(@flashcards, @current_index) || %{})[:back] || "" %>
-          </p>
-        </div>
+<div class="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+  <div class="max-w-2xl w-full text-center">
+    <div class="flex justify-center mb-6">
+      <div class="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center text-white text-4xl font-black shadow-xl">
+        S
       </div>
     </div>
-
-    <p id="cardIndex" class="text-sm text-center text-gray-500 mt-4 mb-8">
-      <%= if @completed do %>
-        All <%= length(@flashcards) %> cards reviewed.
-      <% else %>
-        Card <%= @current_index + 1 %> of <%= length(@flashcards) %>
-      <% end %>
+    
+    <h1 class="text-5xl font-black text-slate-900 tracking-tight mb-4">
+      Welcome to <span class="text-indigo-600">StudyMate</span>
+    </h1>
+    
+    <p class="text-xl text-slate-600 mb-10 leading-relaxed">
+      The ultimate tool for mastering functional programming, Elixir, and beyond. 
+      Create cards, take quizzes, and track your progress.
     </p>
 
-    <div class="button-group flex justify-center space-x-4">
-      <button phx-click="prev"
-        class="px-6 py-3 bg-gray-300 text-gray-800 font-semibold rounded-lg shadow-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50"
-        disabled={@current_index == 0}>
-  Prev
-  </button>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <.link
+        navigate={~p"/flashcards"}
+        class="w-full sm:w-auto px-10 py-4 bg-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:bg-indigo-700 hover:scale-105 transition-all"
+      >
+        Get Started
+      </_link>
+      
+      <a
+        href="https://github.com/andreeva03/studymate"
+        target="_blank"
+        class="w-full sm:w-auto px-10 py-4 bg-white text-slate-700 font-bold rounded-2xl border border-slate-200 shadow-sm hover:bg-slate-50 transition-all"
+      >
+        View GitHub
+      </a>
+    </div>
 
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <div class="text-indigo-600 mb-3 flex justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800">Flashcards</h3>
+        <p class="text-sm text-slate-500 mt-2">Create and organize terms easily.</p>
+      </div>
 
-      <button phx-click="next"
-              class={"px-8 py-3 font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 " <>
-                     if @completed, do: "bg-gray-400 text-white cursor-not-allowed", else: "bg-green-500 text-white hover:bg-green-600"}>
-        Next Card
-      </button>
+      <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <div class="text-indigo-600 mb-3 flex justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800">Interactive Quizzes</h3>
+        <p class="text-sm text-slate-500 mt-2">Test your knowledge in multiple modes.</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+        <div class="text-indigo-600 mb-3 flex justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="font-bold text-slate-800">Powered by Elixir</h3>
+        <p class="text-sm text-slate-500 mt-2">Blazing fast real-time updates.</p>
+      </div>
     </div>
   </div>
 </div>
